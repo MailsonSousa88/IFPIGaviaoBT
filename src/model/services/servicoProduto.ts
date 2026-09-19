@@ -16,7 +16,7 @@ export class servicoProduto {
   public async pesquisarProdutoPorCategoria(
     categoria: string,
   ): Promise<Array<Produto> | undefined> {
-    const PRODUTOS_CATEGORIA =
+    const PRODUTOS_CATEGORIA: Array<Produto> =
       await this.produtoDataSource.buscarProdutoPorCategoria(categoria);
 
     if (PRODUTOS_CATEGORIA) {
@@ -24,5 +24,15 @@ export class servicoProduto {
     }
 
     return PRODUTOS_CATEGORIA;
+  }
+
+  public async pesquisarProdutoPorId(id: string): Promise<Produto> {
+    const PRODUTO: Produto = await this.pesquisarProdutoPorId(id);
+
+    if (PRODUTO) {
+      throw new Error("O produto não foi encontrado.");
+    }
+
+    return PRODUTO;
   }
 }
