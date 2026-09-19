@@ -6,19 +6,19 @@ import { BANCO_PRODUTOS } from "@/model/data/bancoDeProdutos";
 export class ProdutoDataSource {
   /**
    * Objetivo: Permitir a busca de todos os produtos através da categoria
-   * @param categoria Categoria fornecida pelo usuário
+   * @param categoriaId ID da categoria fornecida pelo usuário
    * @returns Uma lista de produtos filtrado por categoria escolhida
    */
-  async buscarProdutoPorCategoria(categoria: string): Promise<Array<Produto>> {
+  async buscarProdutoPorCategoria(categoriaId: string): Promise<Array<Produto>> {
     await new Promise((resolve) => setTimeout(resolve, 3000));
     return BANCO_PRODUTOS.filter(
-      (produto) => produto.categoriaNome == categoria,
+      (produto) => produto.categoriaId == categoriaId,
     );
   }
 
   /**
    * Objetivo: Permitir a busca de um produto por id
-   * @param id O id do produto fornecido pelo usuário
+   * @param id O id do produto fornecido pelo usuário através das ações na View
    * @returns Um produto no caso feliz, undefined no caso contrário
    */
   async buscarProdutoPorId(id: string): Promise<Produto | undefined> {
