@@ -47,7 +47,7 @@ export function useInicioViewModel(): [InicioState, InicioActions] {
 
   function abrirCategoria(categoriaId: string): void {
     router.push({
-      pathname: "/category/[id]",
+      pathname: "/categoria/[id]",
       params: {
         id: categoriaId,
       },
