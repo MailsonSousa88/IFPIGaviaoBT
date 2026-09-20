@@ -1,9 +1,3 @@
-// ============================================================================
-// PADRÃO BIG TRIPE (ANTI-PADRÃO: TUDO NO MESMO ARQUIVO)
-// Tela de Categoria: Listagem de Itens por Categoria selecionada
-// ============================================================================
-
-import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,81 +8,60 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useLocalSearchParams, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { simularConsultaProdutosPorCategoria } from "../../data/mockDatabase";
+import { useCategoriaViewModel } from "@/viewModel/useCategoriaViewModel";
 
-export default function CategoryScreen() {
-  const router = useRouter();
-  const { id } = useLocalSearchParams<{ id: string }>();
+export default function Categoria() {
+  const [categoriaState, categoriaActions] =
+    useCategoriaViewModel();
 
-  // Estados locais controlados na própria View (Sem separação de ViewModel)
-  const [carregando, setCarregando] = useState<boolean>(true);
-  const [produtos, setProdutos] = useState<any[]>([]);
-
-  // Título amigável da categoria
-  const nomeCategoria =
-    id === "bebidas" ? "Bebidas" : id === "comidas" ? "Comidas" : "Cardápio";
-
-  useEffect(() => {
-    // Consulta direta com atraso simulado de banco de dados
-    async function carregarProdutos() {
-      if (!id) return;
-      try {
-        setCarregando(true);
-        const resultado = await simularConsultaProdutosPorCategoria(
-          Array.isArray(id) ? id[0] : id
-        );
-        setProdutos(resultado);
-      } catch (erro) {
-        console.error("Erro ao buscar produtos da categoria:", erro);
-      } finally {
-        setCarregando(false);
-      }
-    }
-
-    carregarProdutos();
-  }, [id]);
-
-  // Função auxiliar de formatação de moeda dentro do arquivo da tela
   function formatarPreco(valor: number): string {
     return `R$ ${valor.toFixed(2).replace(".", ",")}`;
   }
 
   return (
     <View style={styles.tela}>
-      {/* CABEÇALHO ROXO DA CATEGORIA */}
       <View style={styles.cabecalhoContainer}>
         <SafeAreaView edges={["top"]}>
           <View style={styles.cabecalhoLinha}>
-            {/* Botão de Retorno < Início */}
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.botaoVoltar}
-              onPress={() => router.back()}
+              onPress={categoriaActions.voltar}
             >
-              <Ionicons name="chevron-back" size={24} color="#ffffff" />
+              <Ionicons
+                name="chevron-back"
+                size={24}
+                color="#ffffff"
+              />
               <Text style={styles.textoVoltar}>Início</Text>
             </TouchableOpacity>
 
-            {/* Nome Centralizado da Categoria */}
-            <Text style={styles.tituloHeader}>{nomeCategoria}</Text>
+            <Text style={styles.tituloHeader}>
+              {categoriaState.nomeCategoria}
+            </Text>
 
-            {/* Espaçador invisível para balancear o cabeçalho */}
             <View style={styles.espacadorHeader} />
           </View>
         </SafeAreaView>
       </View>
 
-      {/* CONTEÚDO PRINCIPAL: LISTA DE PRODUTOS */}
-      {carregando ? (
+      {categoriaState.carregando ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#501673" />
-          <Text style={styles.loadingTexto}>Buscando itens no banco...</Text>
+          <Text style={styles.loadingTexto}>
+            Buscando itens no banco...
+          </Text>
+        </View>
+      ) : categoriaState.erro ? (
+        <View style={styles.vazioContainer}>
+          <Text style={styles.vazioTexto}>
+            {categoriaState.erro}
+          </Text>
         </View>
       ) : (
         <FlatList
-          data={produtos}
+          data={categoriaState.produtos}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listaConteudo}
           showsVerticalScrollIndicator={false}
@@ -103,16 +76,16 @@ export default function CategoryScreen() {
             <TouchableOpacity
               activeOpacity={0.85}
               style={styles.cardItem}
-              onPress={() => router.push(`/item/${item.id}` as any)}
+              onPress={() =>
+                categoriaActions.abrirProduto(item.id)
+              }
             >
-              {/* Miniatura do Produto */}
               <Image
                 source={item.imagem}
                 style={styles.thumbnail}
                 resizeMode="cover"
               />
 
-              {/* Informações Centrais: Nome e Preço */}
               <View style={styles.infoContainer}>
                 <Text style={styles.nomeItem}>{item.nome}</Text>
                 <Text style={styles.precoItem}>
@@ -120,8 +93,11 @@ export default function CategoryScreen() {
                 </Text>
               </View>
 
-              {/* Seta Indicativa à Direita */}
-              <Ionicons name="chevron-forward" size={22} color="#b0b5be" />
+              <Ionicons
+                name="chevron-forward"
+                size={22}
+                color="#b0b5be"
+              />
             </TouchableOpacity>
           )}
         />
@@ -130,9 +106,8 @@ export default function CategoryScreen() {
   );
 }
 
-// Estilos concentrados diretamente no próprio arquivo (Padrão Big Tripe)
 const styles = StyleSheet.create({
-  tela: {
+    tela: {
     flex: 1,
     backgroundColor: "#f7f8fa",
   },
