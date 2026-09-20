@@ -4,11 +4,11 @@ export const BANCO_CATEGORIAS: Array<Categoria> = [
   {
     id: "comidas",
     nome: "Comidas",
-    imagem: "IMAGEM_PROVISORIA",
+    imagem: require("../../../assets/images/menu/categoria-comidas.png"),
   },
   {
     id: "bebidas",
     nome: "Bebidas",
-    imagem: "IMAGEM_PROVISORIA",
+    imagem: require("../../../assets/images/menu/categoria-bebidas.png"),
   },
 ];

@@ -1,3 +1,5 @@
+import type { ImageSourcePropType } from "react-native";
+
 // Representa o tipo 'PRODUTO'
 
 export type Produto = {
@@ -10,6 +12,6 @@ export type Produto = {
   proteinas: string;
   carboidratos: string;
   gorduras: string;
-  imagem: string;
-  imagemGrande: string;
+  imagem: ImageSourcePropType;
+  imagemGrande: ImageSourcePropType;
 };
