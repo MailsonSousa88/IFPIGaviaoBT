@@ -10,7 +10,7 @@ export class CategoriaDataSource {
    * @returns Retorna uma cópia do banco de categorias
    */
   async buscarCategorias(): Promise<Array<Categoria>> {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     return [...BANCO_CATEGORIAS];
   }
@@ -21,7 +21,7 @@ export class CategoriaDataSource {
    * @returns Uma categoria no caso feliz, caso contrário undefined
    */
   async buscaCategoriaPorId(categoriaId: string): Promise<Categoria | undefined> {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     return BANCO_CATEGORIAS.find((item) => item.id == categoriaId);
   }

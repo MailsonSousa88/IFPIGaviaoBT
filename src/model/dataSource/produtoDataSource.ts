@@ -10,7 +10,7 @@ export class ProdutoDataSource {
    * @returns Uma lista de produtos filtrado por categoria escolhida
    */
   async buscarProdutoPorCategoria(categoriaId: string): Promise<Array<Produto>> {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     return BANCO_PRODUTOS.filter(
       (produto) => produto.categoriaId == categoriaId,
     );
@@ -22,7 +22,7 @@ export class ProdutoDataSource {
    * @returns Um produto no caso feliz, undefined no caso contrário
    */
   async buscarProdutoPorId(id: string): Promise<Produto | undefined> {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     return BANCO_PRODUTOS.find((produto) => produto.id == id);
   }
 }
