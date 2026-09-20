@@ -19,15 +19,12 @@ export class ServicoProduto {
     const PRODUTOS_CATEGORIA: Array<Produto> =
       await this.produtoDataSource.buscarProdutoPorCategoria(categoriaId);
 
-    if (PRODUTOS_CATEGORIA) {
-      throw new Error("Não foi possivel localizar produtos dessa categoria.");
-    }
-
     return PRODUTOS_CATEGORIA;
   }
 
   public async pesquisarProdutoPorId(id: string): Promise<Produto> {
-    const PRODUTO: Produto | undefined = await this.produtoDataSource.buscarProdutoPorId(id)
+    const PRODUTO: Produto | undefined =
+      await this.produtoDataSource.buscarProdutoPorId(id);
 
     if (!PRODUTO) {
       throw new Error("O produto não foi encontrado.");

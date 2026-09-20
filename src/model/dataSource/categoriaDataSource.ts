@@ -14,4 +14,15 @@ export class CategoriaDataSource {
 
     return [...BANCO_CATEGORIAS];
   }
+
+  /**
+   * Objetivo: Encontrar uma categoria através do seu id
+   * @param categoriaId Representa o ID da categoria
+   * @returns Uma categoria no caso feliz, caso contrário undefined
+   */
+  async buscaCategoriaPorId(categoriaId: string): Promise<Categoria | undefined> {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    return BANCO_CATEGORIAS.find((item) => item.id == categoriaId);
+  }
 }

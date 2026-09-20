@@ -24,4 +24,24 @@ export class ServicoCategoria {
 
     return CATEGORIAS;
   }
+
+  /**
+   * Objetivo: Utilizar o data source de categorias para facilitar a pesquisa única de uma categoria
+   * @param categoriaId O ID da categoria que queremos encontrar
+   * @returns A categoria que está sendo buscada no caso feliz, caso contrário erro adequado!
+   */
+  public async pesquisarCategoriaPorId(
+    categoriaId: string,
+  ): Promise<Categoria> {
+    const CATEGORIA_ENCONTRADA =
+      await this.categoriaDataSource.buscaCategoriaPorId(categoriaId);
+
+    if (!CATEGORIA_ENCONTRADA) {
+      throw new Error(
+        "A categoria não foi encontrada, o id não foi localizado.",
+      );
+    }
+
+    return CATEGORIA_ENCONTRADA;
+  }
 }
