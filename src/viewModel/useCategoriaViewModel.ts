@@ -63,7 +63,7 @@ export function useCategoriaViewModel(): [CategoriaState, CategoriaActions] {
 
   function abrirProduto(produtoId: string): void {
     router.push({
-      pathname: "/item/[id]",
+      pathname: "/produto/[id]",
       params: {
         id: produtoId,
       },
