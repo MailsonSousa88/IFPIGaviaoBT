@@ -23,6 +23,7 @@ const servicoCategoria = new ServicoCategoria(new CategoriaDataSource());
 const servicoProduto = new ServicoProduto(new ProdutoDataSource());
 
 export function useCategoriaViewModel(): [CategoriaState, CategoriaActions] {
+  // O ID da categoria vem do segmento dinâmico da rota.
   const { id } = useLocalSearchParams<{ id: string }>();
   const categoriaId = Array.isArray(id) ? id[0] : id;
   const [produtos, setProdutos] = useState<Array<Produto>>([]);

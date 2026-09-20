@@ -20,6 +20,7 @@ export type ProdutoActions = {
 const servicoProduto = new ServicoProduto(new ProdutoDataSource());
 
 export function useProdutoViewModel(): [ProdutoState, ProdutoActions] {
+  // O produto é identificado pelo ID recebido na rota.
   const { id } = useLocalSearchParams<{ id?: string }>();
   const produtoId = Array.isArray(id) ? id[0] : id;
   const [produto, setProduto] = useState<Produto | undefined>(undefined);

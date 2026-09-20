@@ -158,8 +158,6 @@ export default function Produto() {
   );
 }
 
-// Neste ponto, copie integralmente o StyleSheet de src/app/item/[id].tsx.
-// Não use um StyleSheet vazio na implementação real.
 const styles = StyleSheet.create({
       tela: {
     flex: 1,

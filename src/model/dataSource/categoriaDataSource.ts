@@ -1,5 +1,4 @@
-// O Objetivo dos dataSources é conhecer diretamente o banco de dados, e forncer a ponte entre o banco e os services
-// IMPORTANTE: Os dataSources são os unicos que podem diretamente acessar o banco!
+// O data source é a ponte entre o banco e o service de categorias.
 
 import type { Categoria } from "@/model/entities/categoria";
 import { BANCO_CATEGORIAS } from "@/model/data/bancoDeCategorias";

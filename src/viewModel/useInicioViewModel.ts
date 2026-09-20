@@ -4,19 +4,18 @@ import type { Categoria } from "@/model/entities/categoria";
 import { CategoriaDataSource } from "@/model/dataSource/categoriaDataSource";
 import { ServicoCategoria } from "@/model/services/servicoCategoria";
 
-// Esse state representa os items
+// Dados usados pela tela inicial.
 export type InicioState = {
   categorias: Array<Categoria>;
   carregando: boolean;
   erro: string | null;
 };
 
-// Uma Action deve sempre retornar 'VOID'
+// Ações que a tela inicial pode executar.
 export type InicioActions = {
   abrirCategoria: (categoriaId: string) => void;
 };
 
-// Instanciamos o servico de categorias que utiliza o data source de categorias
 const servicoCategoria = new ServicoCategoria(new CategoriaDataSource());
 
 export function useInicioViewModel(): [InicioState, InicioActions] {
@@ -41,7 +40,7 @@ export function useInicioViewModel(): [InicioState, InicioActions] {
       }
     }
 
-    // A função é adicionada aqui pois ela precisa ser chamada se quisermos que ela seja executada!
+    // A busca começa quando a tela é montada.
     carregarCategorias();
   }, []);
 
@@ -54,14 +53,12 @@ export function useInicioViewModel(): [InicioState, InicioActions] {
     });
   }
 
-  // Esse objeto representa o os estados iniciais e modificaveis de modulo
   const inicioState: InicioState = {
     categorias,
     carregando,
     erro,
   };
 
-  // Esse representa as ações capazes de realizar as mudanças dos estados
   const inicioActions: InicioActions = {
     abrirCategoria,
   };
