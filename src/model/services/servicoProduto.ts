@@ -1,7 +1,7 @@
 import type { Produto } from "@/model/entities/produto";
 import { ProdutoDataSource } from "@/model/dataSource/produtoDataSource";
 
-export class servicoProduto {
+export class ServicoProduto {
   private produtoDataSource: ProdutoDataSource;
 
   constructor(produtoDataSource: ProdutoDataSource) {
@@ -15,7 +15,7 @@ export class servicoProduto {
    */
   public async pesquisarProdutoPorCategoria(
     categoriaId: string,
-  ): Promise<Array<Produto> | undefined> {
+  ): Promise<Array<Produto>> {
     const PRODUTOS_CATEGORIA: Array<Produto> =
       await this.produtoDataSource.buscarProdutoPorCategoria(categoriaId);
 
@@ -27,9 +27,9 @@ export class servicoProduto {
   }
 
   public async pesquisarProdutoPorId(id: string): Promise<Produto> {
-    const PRODUTO: Produto = await this.pesquisarProdutoPorId(id);
+    const PRODUTO: Produto | undefined = await this.produtoDataSource.buscarProdutoPorId(id)
 
-    if (PRODUTO) {
+    if (!PRODUTO) {
       throw new Error("O produto não foi encontrado.");
     }
 
