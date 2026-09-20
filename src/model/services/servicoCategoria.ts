@@ -1,5 +1,4 @@
-// O service permite o isolamento das funcionalidades, enquanto os data sources acessam diretamente o banco tanto internamente (mock) ou externamente (supabase, firebase...)
-// O importante é que a ViewModel nunca pode conhecer diretamente os detalhes de implementação dessas funções/serviços
+// O service concentra as regras de consulta das categorias.
 
 import { CategoriaDataSource } from "@/model/dataSource/categoriaDataSource";
 import { Categoria } from "@/model/entities/categoria";

@@ -106,8 +106,6 @@ export default function Categoria() {
   );
 }
 
-// Neste ponto, copie integralmente o StyleSheet de src/app/category/[id].tsx.
-// Não use um StyleSheet vazio na implementação real.
 const styles = StyleSheet.create({
     tela: {
     flex: 1,
