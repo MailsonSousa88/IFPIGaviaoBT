@@ -1,9 +1,22 @@
-// O data source é a ponte entre o banco e o service de categorias.
+// O data source é o gerenciador dos dados da aplicação, é ele que gerencia todos os dados (CRUD)
+// Os services 
 
 import type { Categoria } from "@/model/entities/categoria";
-import { BANCO_CATEGORIAS } from "@/model/data/bancoDeCategorias";
 
 export class CategoriaDataSource {
+  private readonly categorias: Array<Categoria> = [
+    {
+      id: "comidas",
+      nome: "Comidas",
+      imagem: require("../../../assets/images/menu/categoria-comidas.png"),
+    },
+    {
+      id: "bebidas",
+      nome: "Bebidas",
+      imagem: require("../../../assets/images/menu/categoria-bebidas.png"),
+    },
+  ];
+
   /**
    * Objetivo: Permitir a consulta das categorias existentes no banco de dados
    * @returns Retorna uma cópia do banco de categorias
@@ -11,7 +24,7 @@ export class CategoriaDataSource {
   async buscarCategorias(): Promise<Array<Categoria>> {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    return [...BANCO_CATEGORIAS];
+    return [...this.categorias];
   }
 
   /**
@@ -19,9 +32,11 @@ export class CategoriaDataSource {
    * @param categoriaId Representa o ID da categoria
    * @returns Uma categoria no caso feliz, caso contrário undefined
    */
-  async buscaCategoriaPorId(categoriaId: string): Promise<Categoria | undefined> {
+  async buscarCategoriaPorId(
+    categoriaId: string,
+  ): Promise<Categoria | undefined> {
     await new Promise((resolve) => setTimeout(resolve, 300));
 
-    return BANCO_CATEGORIAS.find((item) => item.id == categoriaId);
+    return this.categorias.find((item) => item.id === categoriaId);
   }
 }
