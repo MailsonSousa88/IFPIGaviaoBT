@@ -1,5 +1,5 @@
 // O data source é o gerenciador dos dados da aplicação, é ele que gerencia todos os dados (CRUD)
-// Os services 
+// Os services são responsavel apenas por funcionalidades isoladas (Autenticar, Enviar email...)
 
 import type { Categoria } from "@/model/entities/categoria";
 
