@@ -2,7 +2,6 @@ import type { Produto } from "@/model/entities/produto";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ProdutoDataSource } from "@/model/dataSource/produtoDataSource";
-import { ServicoProduto } from "@/model/services/servicoProduto";
 
 export type ProdutoState = {
   produto: Produto | undefined;
@@ -17,7 +16,7 @@ export type ProdutoActions = {
   diminuirQuantidade: () => void;
 };
 
-const servicoProduto = new ServicoProduto(new ProdutoDataSource());
+const produtoDataSource = new ProdutoDataSource();
 
 export function useProdutoViewModel(): [ProdutoState, ProdutoActions] {
   // O produto é identificado pelo ID recebido na rota.
@@ -38,7 +37,11 @@ export function useProdutoViewModel(): [ProdutoState, ProdutoActions] {
           throw new Error("O id do produto não foi informado!");
         }
 
-        const resultado = await servicoProduto.pesquisarProdutoPorId(produtoId);
+        const resultado = await produtoDataSource.buscarProdutoPorId(produtoId);
+
+        if (!resultado) {
+          throw new Error("O produto não foi encontrado.");
+        }
 
         setProduto(resultado);
       } catch (erro) {
