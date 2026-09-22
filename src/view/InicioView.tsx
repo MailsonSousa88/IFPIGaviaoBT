@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useInicioViewModel } from "@/viewModel/useInicioViewModel";
 
-export default function Inicio() {
+const Inicio = () => {
   const [inicioState, inicioActions] = useInicioViewModel();
 
   return (
@@ -195,3 +195,5 @@ const styles = StyleSheet.create({
     color: "#1a1a1a",
   }, 
 });
+
+export default Inicio;

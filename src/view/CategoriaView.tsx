@@ -10,14 +10,11 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useCategoriaViewModel } from "@/viewModel/useCategoriaViewModel";
+import { formatarPreco } from "@/view/utils/formatarPreco";
 
-export default function Categoria() {
+const  Categoria = () => {
   const [categoriaState, categoriaActions] =
     useCategoriaViewModel();
-
-  function formatarPreco(valor: number): string {
-    return `R$ ${valor.toFixed(2).replace(".", ",")}`;
-  }
 
   return (
     <View style={styles.tela}>
@@ -206,3 +203,5 @@ const styles = StyleSheet.create({
     color: "#8c959f",
   },
 });
+
+export default Categoria;

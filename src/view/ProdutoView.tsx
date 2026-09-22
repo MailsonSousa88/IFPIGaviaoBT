@@ -10,14 +10,11 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useProdutoViewModel } from "@/viewModel/useProdutoViewModel";
+import { formatarPreco } from "@/view/utils/formatarPreco";
 
-export default function Produto() {
+const Produto = () => {
   const [produtoState, produtoActions] =
     useProdutoViewModel();
-
-  function formatarPreco(valor: number): string {
-    return `R$ ${valor.toFixed(2).replace(".", ",")}`;
-  }
 
   if (produtoState.carregando) {
     return (
@@ -382,3 +379,5 @@ const styles = StyleSheet.create({
     color: "#dc3545",
   },
 });
+
+export default Produto;
