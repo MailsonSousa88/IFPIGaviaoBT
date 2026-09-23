@@ -10,22 +10,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useProdutoViewModel } from "@/viewModel/useProdutoViewModel";
+import { formatarPreco } from "@/view/utils/formatarPreco";
 
-export default function Produto() {
-  const [produtoState, produtoActions] =
-    useProdutoViewModel();
-
-  function formatarPreco(valor: number): string {
-    return `R$ ${valor.toFixed(2).replace(".", ",")}`;
-  }
+const Produto = () => {
+  const [produtoState, produtoActions] = useProdutoViewModel();
 
   if (produtoState.carregando) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#501673" />
-        <Text style={styles.loadingTexto}>
-          Carregando detalhes do item...
-        </Text>
+        <Text style={styles.loadingTexto}>Carregando detalhes do item...</Text>
       </View>
     );
   }
@@ -52,17 +46,11 @@ export default function Produto() {
               style={styles.botaoVoltar}
               onPress={produtoActions.voltar}
             >
-              <Ionicons
-                name="chevron-back"
-                size={24}
-                color="#ffffff"
-              />
+              <Ionicons name="chevron-back" size={24} color="#ffffff" />
               <Text style={styles.textoVoltar}>Voltar</Text>
             </TouchableOpacity>
 
-            <Text style={styles.tituloHeader}>
-              Detalhes do Lanche
-            </Text>
+            <Text style={styles.tituloHeader}>Detalhes do Lanche</Text>
 
             <View style={styles.espacadorHeader} />
           </View>
@@ -102,26 +90,25 @@ export default function Produto() {
             </Text>
           </View>
 
-          <Text style={styles.descricaoTexto}>
-            {produto.descricao}
-          </Text>
+          <Text style={styles.descricaoTexto}>{produto.descricao}</Text>
 
           <View style={styles.nutricaoLinha}>
             <Text style={styles.nutricaoItem}>
-              Proteínas: {produto.proteinas}
+              Proteínas: {""}
+              <Text style={styles.nutricaoValor}>{produto.proteinas}</Text>
             </Text>
             <Text style={styles.nutricaoItem}>
-              Carboidratos: {produto.carboidratos}
+              Carboidratos: {""}
+              <Text style={styles.nutricaoValor}>{produto.carboidratos}</Text>
             </Text>
             <Text style={styles.nutricaoItem}>
-              Gorduras: {produto.gorduras}
+              Gorduras: {""}
+              <Text style={styles.nutricaoValor}>{produto.gorduras}</Text>
             </Text>
           </View>
 
           <View style={styles.quantidadeLinha}>
-            <Text style={styles.quantidadeLabel}>
-              Quantidades:
-            </Text>
+            <Text style={styles.quantidadeLabel}>Quantidades:</Text>
 
             <View style={styles.seletorContainer}>
               <TouchableOpacity
@@ -148,18 +135,16 @@ export default function Produto() {
             style={styles.btnVoltarCardapio}
             onPress={produtoActions.voltar}
           >
-            <Text style={styles.textoBtnVoltar}>
-              Voltar ao Cardápio
-            </Text>
+            <Text style={styles.textoBtnVoltar}>Voltar ao Cardápio</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-      tela: {
+  tela: {
     flex: 1,
     backgroundColor: "#ffffff",
   },
@@ -301,7 +286,7 @@ const styles = StyleSheet.create({
   },
   nutricaoValor: {
     fontWeight: "bold",
-    color: "#1a1a1a",
+    color: "#050505",
   },
   quantidadeLinha: {
     flexDirection: "row",
@@ -382,3 +367,5 @@ const styles = StyleSheet.create({
     color: "#dc3545",
   },
 });
+
+export default Produto;

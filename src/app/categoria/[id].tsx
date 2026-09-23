@@ -1,3 +1,3 @@
-import Categoria from "@/view/categoria/[id]";
+import Categoria from "@/view/CategoriaView";
 
 export default Categoria;

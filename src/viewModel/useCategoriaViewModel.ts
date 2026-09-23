@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { CategoriaDataSource } from "@/model/dataSource/categoriaDataSource";
 import { ProdutoDataSource } from "@/model/dataSource/produtoDataSource";
-import { ServicoCategoria } from "@/model/services/servicoCategoria";
-import { ServicoProduto } from "@/model/services/servicoProduto";
 import type { Produto } from "@/model/entities/produto";
 
 export type CategoriaState = {
@@ -18,9 +16,8 @@ export type CategoriaActions = {
   voltar: () => void;
 };
 
-const servicoCategoria = new ServicoCategoria(new CategoriaDataSource());
-
-const servicoProduto = new ServicoProduto(new ProdutoDataSource());
+const categoriaDataSource = new CategoriaDataSource();
+const produtoDataSource = new ProdutoDataSource();
 
 export function useCategoriaViewModel(): [CategoriaState, CategoriaActions] {
   // O ID da categoria vem do segmento dinâmico da rota.
@@ -43,11 +40,17 @@ export function useCategoriaViewModel(): [CategoriaState, CategoriaActions] {
         }
 
         const categoriaEncontrada =
-          await servicoCategoria.pesquisarCategoriaPorId(categoriaId);
+          await categoriaDataSource.buscarCategoriaPorId(categoriaId);
+
+        if (!categoriaEncontrada) {
+          throw new Error(
+            "A categoria não foi encontrada, o id não foi localizado.",
+          );
+        }
 
         setNomeCategoria(categoriaEncontrada.nome);
         const resultado =
-          await servicoProduto.pesquisarProdutoPorCategoria(categoriaId);
+          await produtoDataSource.buscarProdutoPorCategoria(categoriaId);
 
         setProdutos(resultado);
       } catch (erro) {

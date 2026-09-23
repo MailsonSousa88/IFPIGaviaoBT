@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import type { Categoria } from "@/model/entities/categoria";
 import { CategoriaDataSource } from "@/model/dataSource/categoriaDataSource";
-import { ServicoCategoria } from "@/model/services/servicoCategoria";
 
 // Dados usados pela tela inicial.
 export type InicioState = {
@@ -16,7 +15,7 @@ export type InicioActions = {
   abrirCategoria: (categoriaId: string) => void;
 };
 
-const servicoCategoria = new ServicoCategoria(new CategoriaDataSource());
+const categoriaDataSource = new CategoriaDataSource();
 
 export function useInicioViewModel(): [InicioState, InicioActions] {
   const [categorias, setCategorias] = useState<Array<Categoria>>([]);
@@ -29,7 +28,12 @@ export function useInicioViewModel(): [InicioState, InicioActions] {
       setErro(null);
 
       try {
-        const resultado = await servicoCategoria.pesquisarTodasCategorias();
+        const resultado = await categoriaDataSource.buscarCategorias();
+
+        if (resultado.length === 0) {
+          throw new Error("Categorias não foram encontradas!");
+        }
+
         setCategorias(resultado);
       } catch (erro) {
         return erro instanceof Error

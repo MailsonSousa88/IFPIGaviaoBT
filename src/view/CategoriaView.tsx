@@ -3,21 +3,16 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   FlatList,
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useCategoriaViewModel } from "@/viewModel/useCategoriaViewModel";
+import { ProdutoCard } from "./components/ProdutoCard";
 
-export default function Categoria() {
-  const [categoriaState, categoriaActions] =
-    useCategoriaViewModel();
-
-  function formatarPreco(valor: number): string {
-    return `R$ ${valor.toFixed(2).replace(".", ",")}`;
-  }
+const Categoria = () => {
+  const [categoriaState, categoriaActions] = useCategoriaViewModel();
 
   return (
     <View style={styles.tela}>
@@ -29,11 +24,7 @@ export default function Categoria() {
               style={styles.botaoVoltar}
               onPress={categoriaActions.voltar}
             >
-              <Ionicons
-                name="chevron-back"
-                size={24}
-                color="#ffffff"
-              />
+              <Ionicons name="chevron-back" size={24} color="#ffffff" />
               <Text style={styles.textoVoltar}>Início</Text>
             </TouchableOpacity>
 
@@ -49,15 +40,11 @@ export default function Categoria() {
       {categoriaState.carregando ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#501673" />
-          <Text style={styles.loadingTexto}>
-            Buscando itens no banco...
-          </Text>
+          <Text style={styles.loadingTexto}>Buscando itens no banco...</Text>
         </View>
       ) : categoriaState.erro ? (
         <View style={styles.vazioContainer}>
-          <Text style={styles.vazioTexto}>
-            {categoriaState.erro}
-          </Text>
+          <Text style={styles.vazioTexto}>{categoriaState.erro}</Text>
         </View>
       ) : (
         <FlatList
@@ -73,41 +60,19 @@ export default function Categoria() {
             </View>
           }
           renderItem={({ item }) => (
-            <TouchableOpacity
-              activeOpacity={0.85}
-              style={styles.cardItem}
-              onPress={() =>
-                categoriaActions.abrirProduto(item.id)
-              }
-            >
-              <Image
-                source={item.imagem}
-                style={styles.thumbnail}
-                resizeMode="cover"
-              />
-
-              <View style={styles.infoContainer}>
-                <Text style={styles.nomeItem}>{item.nome}</Text>
-                <Text style={styles.precoItem}>
-                  {formatarPreco(item.preco)}
-                </Text>
-              </View>
-
-              <Ionicons
-                name="chevron-forward"
-                size={22}
-                color="#b0b5be"
-              />
-            </TouchableOpacity>
+            <ProdutoCard
+              produto={item}
+              onPress={() => categoriaActions.abrirProduto(item.id)}
+            />
           )}
         />
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-    tela: {
+  tela: {
     flex: 1,
     backgroundColor: "#f7f8fa",
   },
@@ -152,41 +117,6 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingBottom: 32,
   },
-  cardItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#ffffff",
-    borderRadius: 14,
-    padding: 12,
-    marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 2,
-  },
-  thumbnail: {
-    width: 80,
-    height: 74,
-    borderRadius: 10,
-    backgroundColor: "#f0f0f0",
-  },
-  infoContainer: {
-    flex: 1,
-    marginLeft: 14,
-    justifyContent: "center",
-  },
-  nomeItem: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-    marginBottom: 6,
-  },
-  precoItem: {
-    fontSize: 15,
-    fontWeight: "600",
-    color: "#333333",
-  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
@@ -206,3 +136,5 @@ const styles = StyleSheet.create({
     color: "#8c959f",
   },
 });
+
+export default Categoria;

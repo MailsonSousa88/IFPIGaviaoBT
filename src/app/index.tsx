@@ -1,3 +1,3 @@
-import Inicio from "@/view/inicio";
+import Inicio from "@/view/InicioView";
 
 export default Inicio;
