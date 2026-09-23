@@ -1,15 +1,14 @@
+import { useInicioViewModel } from "@/viewModel/useInicioViewModel";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
   ActivityIndicator,
+  Image,
   ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { useInicioViewModel } from "@/viewModel/useInicioViewModel";
+import { CategoriaCard } from "./components/CategoriaCard";
 
 const Inicio = () => {
   const [inicioState, inicioActions] = useInicioViewModel();
@@ -31,9 +30,7 @@ const Inicio = () => {
             <Text style={styles.subtituloTexto}>
               O que você deseja pedir hoje?
             </Text>
-            <Text style={styles.subtituloDestaque}>
-              Escolha uma categoria:
-            </Text>
+            <Text style={styles.subtituloDestaque}>Escolha uma categoria:</Text>
           </View>
         </SafeAreaView>
       </View>
@@ -45,51 +42,27 @@ const Inicio = () => {
         {inicioState.carregando ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#501673" />
-            <Text style={styles.loadingTexto}>
-              Consultando cardápio...
-            </Text>
+            <Text style={styles.loadingTexto}>Consultando cardápio...</Text>
           </View>
         ) : inicioState.erro ? (
           <View style={styles.loadingContainer}>
-            <Text style={styles.loadingTexto}>
-              {inicioState.erro}
-            </Text>
+            <Text style={styles.loadingTexto}>{inicioState.erro}</Text>
           </View>
         ) : (
           <View style={styles.gridCategorias}>
             {inicioState.categorias.map((categoria) => (
-              <TouchableOpacity
+              <CategoriaCard
                 key={categoria.id}
-                activeOpacity={0.88}
-                style={styles.cardCategoria}
-                onPress={() =>
-                  inicioActions.abrirCategoria(categoria.id)
-                }
-              >
-                <Image
-                  source={categoria.imagem}
-                  style={styles.imagemCategoria}
-                  resizeMode="cover"
-                />
-
-                <View style={styles.rodapeCard}>
-                  <Text style={styles.nomeCategoria}>
-                    {categoria.nome}
-                  </Text>
-                  <Ionicons
-                    name="arrow-forward"
-                    size={20}
-                    color="#501673"
-                  />
-                </View>
-              </TouchableOpacity>
+                categoria={categoria}
+                onPress={() => inicioActions.abrirCategoria(categoria.id)}
+              />
             ))}
           </View>
         )}
       </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   tela: {
@@ -165,35 +138,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     gap: 14,
   },
-  cardCategoria: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-    borderRadius: 18,
-    borderWidth: 2,
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 3,
-  },
-  imagemCategoria: {
-    width: "100%",
-    height: 210,
-  },
-  rodapeCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    backgroundColor: "#ffffff",
-  },
-  nomeCategoria: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-  }, 
 });
 
 export default Inicio;
